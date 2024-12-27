@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SurveyQuestion } from "@/types/surveyQuestions";
+import Image from "next/image";
 
 interface MultiQuestionProps {
     question: SurveyQuestion;
@@ -28,7 +29,7 @@ const MultiQuestion: React.FC<MultiQuestionProps> = ({
                 <h1 className="text-2xl text-primary text-center font-outfit">
                     {question.question}
                 </h1>
-                <div className="flex flex-col w-full gap-4">
+                <div className="grid grid-cols-2 w-3/4 gap-4">
                     {question.options?.map((option) => (
                         <button
                             key={option}
@@ -39,11 +40,20 @@ const MultiQuestion: React.FC<MultiQuestionProps> = ({
                                     setSelectedAnswers([...selectedAnswers, option]);
                                 }
                             }}
-                            className={`btn btn-secondary hover:bg-accent/10
+                            className={`btn btn-secondary h-24 hover:bg-accent/10 flex flex-col items-center justify-center
                                 ${selectedAnswers.includes(option)
                                     ? 'border-accent bg-accent/10'
                                     : ''}`}
                         >
+                            {question.icons && (
+                                <Image
+                                    src={`/icons/${option.toLowerCase().replace(' ', '_')}.svg`}
+                                    alt={option}
+                                    width={20}
+                                    height={20}
+                                    className="w-10 h-10 mb-2"
+                                />
+                            )}
                             {option}
                         </button>
                     ))}

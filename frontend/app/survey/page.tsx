@@ -34,7 +34,8 @@ const questions: SurveyQuestion[] = [
         id: 4,
         question: "What are your skin concerns?",
         options: ["Acne", "Pores", "Redness", "Texture", "Wrinkles", "Pigmentation"],
-        type: "MULTI"
+        type: "MULTI",
+        icons: true
     },
     {
         id: 5,

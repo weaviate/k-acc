@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SurveyQuestion } from "@/types/surveyQuestions";
+import Image from "next/image";
 
 interface SingleQuestionProps {
     question: SurveyQuestion;
@@ -28,12 +29,12 @@ const SingleQuestion: React.FC<SingleQuestionProps> = ({
                 <h1 className="text-2xl text-primary text-center font-outfit">
                     {question.question}
                 </h1>
-                <div className="flex flex-col w-full gap-4">
+                <div className="flex flex-col w-1/2 gap-4">
                     {question.options?.map((option) => (
                         <button
                             key={option}
                             onClick={() => setSelectedAnswer(selectedAnswer === option ? undefined : option)}
-                            className={`btn btn-secondary hover:bg-accent/10
+                            className={`btn btn-secondary hover:bg-accent/10 flex items-center gap-2
                                 ${selectedAnswer === option
                                     ? 'border-accent bg-accent/10'
                                     : ''}`}
