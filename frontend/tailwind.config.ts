@@ -25,6 +25,10 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      sm: "640px",
+      lg: "640px",
+    },
     extend: {
       fontFamily: {
         outfit: ["var(--font-outfit)"],
@@ -32,11 +36,13 @@ const config: Config = {
       },
       colors: {
         background: "#F4F1FD",
-        background_alt: "#FFFFFF",
+        background_alt: "#FBFAFF",
         primary: "#181620",
         secondary: "#ffffff",
         accent: "#7D69F0",
         warning: "#DE774B",
+        background_blue: "#DDEFFF",
+        background_purple: "#DED8FF",
       },
       fontSize: fontSizes,
     },

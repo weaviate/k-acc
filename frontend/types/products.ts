@@ -8,6 +8,8 @@ export interface Product {
   brand: string;
   rating: number;
   reviews: string[];
+  reviewsCount: number;
+  ingredients: string;
 }
 
 export const emptyProduct: Product = {
@@ -20,17 +22,16 @@ export const emptyProduct: Product = {
   brand: "",
   rating: 0,
   reviews: [],
+  reviewsCount: 0,
+  ingredients: "",
 };
 
-export const dummyProduct: Product = {
-  id: "1111111111",
-  name: "Product 1",
-  description: "Product 1 description",
-  price: 100,
-  image:
-    "https://d3o574pyao1sq3.cloudfront.net/fashion/136e178d-7519-49eb-bf97-4f53296a25f2.png",
-  category: "Category 1",
-  brand: "Brand 1",
-  rating: 4.5,
-  reviews: ["Review 1", "Review 2", "Review 3"],
-};
+export interface Review {
+  id: string;
+  rating: number;
+  comment: string;
+  title: string;
+  author: string;
+  date: string;
+  img?: string;
+}

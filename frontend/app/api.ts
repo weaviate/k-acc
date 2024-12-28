@@ -4,8 +4,8 @@ import {
   dummySearchRequest,
   emptySearchResponse,
 } from "@/types/search";
-import { Product, dummyProduct, emptyProduct } from "@/types/products";
-
+import { Product, emptyProduct } from "@/types/products";
+import { dummyProduct } from "@/constants/constants";
 // const checkUrl = async (url: string): Promise<boolean> => {
 //     try {
 //         const response = await fetch(url);
@@ -74,5 +74,9 @@ export async function getProduct(product_id: string): Promise<any> {
   //     console.error("Failed to perform search:", error);
   //     return emptyProduct;
   // }
+  return dummyProduct;
+}
+
+export async function getRecommendation(product_id: string, size: number = 3): Promise<any> {
   return dummyProduct;
 }

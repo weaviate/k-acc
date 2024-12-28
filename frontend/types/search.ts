@@ -1,4 +1,4 @@
-import { emptyProduct, Product } from "./products";
+import { Product } from "./products";
 
 export interface SearchRequest {
   query: string;
