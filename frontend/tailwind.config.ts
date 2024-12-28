@@ -46,24 +46,23 @@ const config: Config = {
     themes: [
       {
         mytheme: {
+          primary: "#181620",
 
-          "primary": "#181620",
+          secondary: "#ffffff",
 
-          "secondary": "#ffffff",
+          accent: "#7d69f0",
 
-          "accent": "#7d69f0",
-
-          "neutral": "#f4f1fd",
+          neutral: "#f4f1fd",
 
           "base-100": "#f4f1fd",
 
-          "info": "#5dacf5",
+          info: "#5dacf5",
 
-          "success": "#34d399",
+          success: "#34d399",
 
-          "warning": "#fde047",
+          warning: "#fde047",
 
-          "error": "#fb7185",
+          error: "#fb7185",
         },
       },
     ],

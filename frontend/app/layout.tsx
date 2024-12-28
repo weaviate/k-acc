@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Outfit, Merriweather } from "next/font/google";
 import { Suspense } from "react";
-import Navbar from '@/components/navigation/Navbar';
+import Navbar from "@/components/navigation/Navbar";
 
 const merriweather = Merriweather({
   subsets: ["latin"],
