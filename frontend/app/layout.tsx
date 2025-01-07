@@ -29,9 +29,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`bg-background ${outfit.variable} ${merriweather.variable} font-outfit antialiased flex`}
+        suppressHydrationWarning
       >
         <div className="flex flex-col min-h-screen w-full">
           <Navbar />

@@ -20,7 +20,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       <ul className="steps steps-horizontal">
         {questions.map((question, index) => (
           <li
-            key={question.id}
+            key={question.question_id}
             className={`step ${index <= currentQuestion - 1 ? "before:!bg-accent after:!bg-accent" : "before:!bg-secondary after:!bg-secondary"}`}
           ></li>
         ))}

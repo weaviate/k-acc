@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 interface SimpleProduct {
-  id: string;
+  product_id: string;
   name: string;
   price: number;
   description: string;
@@ -19,7 +19,7 @@ const StackCard: React.FC<StackCardProps> = ({ products, name }) => {
     <div className="flex flex-col gap-2 justify-left items-left w-[400px] h-[400px] bg-secondary rounded-md p-3">
       <h1 className="text-sm text-bold text-primary">Best stack for: {name}</h1>
       {products.map((product: SimpleProduct, index: number) => (
-        <div className="relative py-2 overflow-hidden" key={product.id}>
+        <div className="relative py-2 overflow-hidden" key={product.product_id}>
           <div className="flex flex-row justify-left items-left">
             <Image
               src="https://d3o574pyao1sq3.cloudfront.net/fashion/136e178d-7519-49eb-bf97-4f53296a25f2.png"

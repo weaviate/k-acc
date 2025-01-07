@@ -1,82 +1,96 @@
-import {
-  SearchRequest,
-  SearchResponse,
-  dummySearchRequest,
-  emptySearchResponse,
-} from "@/types/search";
+"use server";
+
+import { SearchRequest } from "@/types/search";
 import { Product, emptyProduct } from "@/types/products";
-import { dummyProduct } from "@/constants/constants";
-// const checkUrl = async (url: string): Promise<boolean> => {
-//     try {
-//         const response = await fetch(url);
-//         return response.ok;
-//     } catch (error) {
-//         console.error(`Failed to fetch from ${url}:`, error);
-//         return false;
-//     }
-// };
+import weaviate, { WeaviateClient } from "weaviate-client";
 
-// // Backend detection - health check
-// export const detectHost = async (): Promise<string> => {
-//     const localUrl = "http://localhost:8000/health";
-//     const rootUrl = "http://127.0.0.1:8000/health";
+async function connectToWeaviate() {
+  const weaviateURL = process.env.WEAVIATE_URL as string;
+  const weaviateKey = process.env.WEAVIATE_API_KEY as string;
+  const openaiKey = process.env.OPENAI_API_KEY as string;
 
-//     const isLocalHealthy = await checkUrl(localUrl);
-//     if (isLocalHealthy) {
-//         return "http://localhost:8000";
-//     }
+  const client: WeaviateClient = await weaviate.connectToWeaviateCloud(
+    weaviateURL,
+    {
+      authCredentials: new weaviate.ApiKey(weaviateKey),
+      headers: {
+        "X-OpenAI-Api-Key": openaiKey,
+      },
+    },
+  );
 
-//     const isRootHealthy = await checkUrl(rootUrl);
-//     if (isRootHealthy) {
-//         return "http://127.0.0.1:8000";
-//     }
-
-//     throw new Error("Both health checks failed, please check the server");
-// };
-
-export async function search(searchRequest: SearchRequest): Promise<any> {
-  // try {
-  //     const host = await detectHost();
-  //     const response = await fetch(`${host}/search`, {
-  //         method: "POST",
-  //         headers: {
-  //             "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(searchRequest),
-  //     });
-
-  //     if (!response.ok) {
-  //         return emptySearchResponse;
-  //     }
-
-  //     const data = await response.json();
-  //     return data;
-  // } catch (error) {
-  // console.error("Failed to perform search:", error);
-  return emptySearchResponse;
-  // }
+  return client;
 }
 
-export async function getProduct(product_id: string): Promise<any> {
-  // try {
-  //     const host = await detectHost();
-  //     const response = await fetch(`${host}/product/${product_id}`, {
-  //         method: "GET",
-  //     });
-
-  //     if (!response.ok) {
-  //         return emptyProduct;
-  //     }
-
-  //     const data = await response.json();
-  //     return data;
-  // } catch (error) {
-  //     console.error("Failed to perform search:", error);
-  //     return emptyProduct;
-  // }
-  return dummyProduct;
+// Verify collection exists
+async function checkCollection() {
+  const client = await connectToWeaviate();
+  const products = client.collections.get("ProductData");
+  const collectionConfig = await products.config.get();
+  console.log("Config collection: ", collectionConfig);
 }
 
-export async function getRecommendation(product_id: string, size: number = 3): Promise<any> {
-  return dummyProduct;
+async function getProductUUID(productId: string) {
+  const client = await connectToWeaviate();
+  const products = client.collections.get("ProductData");
+
+  const result = await products.query.fetchObjects({
+    filters: products.filter.byProperty("product_id").equal(productId),
+    limit: 1,
+  });
+
+  return result.objects[0].uuid;
+}
+
+export async function getProduct(productId: string) {
+  console.log("getProduct: ", productId);
+  const client = await connectToWeaviate();
+  const products = client.collections.get("ProductData");
+
+  const result = await products.query.fetchObjects({
+    filters: products.filter.byProperty("product_id").equal(productId),
+    limit: 1,
+  });
+
+  for (let object of result.objects) {
+    console.log(JSON.stringify(object.properties, null, 2));
+  }
+
+  return (result.objects[0]?.properties as unknown as Product) || emptyProduct;
+}
+
+export async function searchProducts(searchRequest: SearchRequest) {
+  const client = await connectToWeaviate();
+  const products = client.collections.get("ProductData");
+
+  let result;
+  if (searchRequest.query !== "") {
+    result = await products.query.nearText(searchRequest.query, {
+      limit: 2,
+    });
+  } else {
+    result = await products.query.fetchObjects({
+      limit: 12,
+    });
+  }
+
+  const product_results: Product[] = result.objects.map(
+    (item) => item.properties as unknown as Product,
+  );
+  return product_results || [];
+}
+
+export async function getRecommendations(productId: string) {
+  const client = await connectToWeaviate();
+  const products = client.collections.get("ProductData");
+
+  const productUUID = await getProductUUID(productId);
+  const result = await products.query.nearObject(productUUID, {
+    limit: 5,
+  });
+
+  const product_results: Product[] = result.objects.map(
+    (item) => item.properties as unknown as Product,
+  );
+  return product_results || [];
 }

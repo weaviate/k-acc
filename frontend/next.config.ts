@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
         pathname: "/fashion/**",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "d1flfk77wl2xk4.cloudfront.net",
+        port: "",
+        pathname: "/Assets/**",
+        search: "",
+      },
     ],
   },
 };

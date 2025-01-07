@@ -1,5 +1,5 @@
 export interface SurveyQuestion {
-  id: number;
+  question_id: number;
   question: string;
   options: string[];
   type: "MULTI" | "SINGLE" | "RANGE";

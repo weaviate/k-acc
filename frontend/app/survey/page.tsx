@@ -30,7 +30,9 @@ export default function SurveyPage() {
     return null;
   }
 
-  const currentQuestion = questions.find((q) => q.id === currentQuestionId);
+  const currentQuestion = questions.find(
+    (q) => q.question_id === currentQuestionId,
+  );
 
   const handleNext = (answer: string | string[]) => {
     setAnswers((prev) => ({

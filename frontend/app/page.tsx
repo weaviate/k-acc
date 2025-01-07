@@ -4,16 +4,25 @@ import ComponentRotator from "@/components/visual/ComponentRotator";
 import StackCard from "@/components/product/StackCard";
 import { useRouter } from "next/navigation";
 import ProductCard from "@/components/product/ProductCard";
-import { stackProducts, recommendedProducts, dummyReviews } from "@/constants/constants";
+import { stackProducts, dummyReviews } from "@/constants/constants";
 import ReviewDisplay from "@/components/visual/ReviewDisplay";
 
 export default function Home() {
   const router = useRouter();
 
   const cards: { id: string; component: React.ReactElement }[] = [
-    { id: "1", component: <StackCard products={stackProducts} name="Dry & Acne" /> },
-    { id: "2", component: <StackCard products={stackProducts} name="Dry & Acne" /> },
-    { id: "3", component: <StackCard products={stackProducts} name="Dry & Acne" /> },
+    {
+      id: "1",
+      component: <StackCard products={stackProducts} name="Dry & Acne" />,
+    },
+    {
+      id: "2",
+      component: <StackCard products={stackProducts} name="Dry & Acne" />,
+    },
+    {
+      id: "3",
+      component: <StackCard products={stackProducts} name="Dry & Acne" />,
+    },
   ];
 
   return (
@@ -34,7 +43,10 @@ export default function Home() {
               <br />
               and only you.
             </p>
-            <button className="btn btn-accent text-secondary mt-6 w-1/2 lg:w-1/4" onClick={() => router.push('/survey')} >
+            <button
+              className="btn btn-accent text-secondary mt-6 w-1/2 lg:w-1/4"
+              onClick={() => router.push("/survey")}
+            >
               Get Started
             </button>
           </div>
@@ -43,23 +55,34 @@ export default function Home() {
       <div className="mb-16">
         <ComponentRotator cards={cards} />
         <div className="flex flex-row justify-center mb-10">
-          <button className="btn btn-accent text-secondary mt-10 w-1/2 lg:w-1/6" onClick={() => router.push('/survey')}>Build your stack</button>
+          <button
+            className="btn btn-accent text-secondary mt-10 w-1/2 lg:w-1/6"
+            onClick={() => router.push("/survey")}
+          >
+            Build your stack
+          </button>
         </div>
       </div>
       <div className="bg-background_blue p-10 flex flex-col items-center">
-        <p className="text-primary text-xl lg:text-2xl font-outfit mb-10">Recommended for you</p>
-        <div className="carousel carousel-center max-w-[100vw]">
+        <p className="text-primary text-xl lg:text-2xl font-outfit mb-10">
+          Recommended for you
+        </p>
+        {/* <div className="carousel carousel-center max-w-[100vw]">
           {recommendedProducts.map((product) => (
-            <div key={product.id} className="carousel-item w-1/2 lg:w-64">
+            <div key={product.product_id.toString()} className="carousel-item w-1/2 lg:w-64">
               <ProductCard product={product} />
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
       <div className="p-10 flex flex-col items-center">
-        <p className="pt-5 text-primary text-xl lg:text-2xl font-outfit mb-2">Customer Reviews</p>
-        <p className="text-primary text-md font-outfit mb-10">Must-have beauty products highly rated by customers!</p>
-        <ReviewDisplay reviews={dummyReviews}/>
+        <p className="pt-5 text-primary text-xl lg:text-2xl font-outfit mb-2">
+          Customer Reviews
+        </p>
+        <p className="text-primary text-md font-outfit mb-10">
+          Must-have beauty products highly rated by customers!
+        </p>
+        <ReviewDisplay reviews={dummyReviews} />
       </div>
     </main>
   );
