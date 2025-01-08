@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { SurveyQuestion } from "@/types/surveyQuestions";
-import Image from "next/image";
+import { SurveyQuestion, SurveyAnswer } from "@/types/survey";
 
 interface SingleQuestionProps {
   question: SurveyQuestion;
   onBack: () => void;
   onNext: (answer: string) => void;
-  existingAnswer?: string;
+  existingAnswer?: SurveyAnswer;
 }
 
 const SingleQuestion: React.FC<SingleQuestionProps> = ({
@@ -16,7 +15,7 @@ const SingleQuestion: React.FC<SingleQuestionProps> = ({
   existingAnswer,
 }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>(
-    existingAnswer,
+    existingAnswer?.selected_options[0],
   );
 
   return (

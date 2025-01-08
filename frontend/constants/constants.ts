@@ -1,4 +1,4 @@
-import { SurveyQuestion } from "@/types/surveyQuestions";
+import { SurveyQuestion } from "@/types/survey";
 import { Product, Review } from "@/types/products";
 
 export const questions: SurveyQuestion[] = [
@@ -16,9 +16,9 @@ export const questions: SurveyQuestion[] = [
   },
   {
     question_id: 3,
-    question: "What gender do you identify with?",
-    options: ["Male", "Female", "Non-binary", "Prefer not to say"],
-    type: "SINGLE",
+    question: "What are your skin goals?",
+    options: ["Glowing Skin", "Firmness", "Hydration", "Repairing Skin", "Soothing", "Protection"],
+    type: "MULTI",
   },
   {
     question_id: 4,
@@ -45,6 +45,7 @@ export const questions: SurveyQuestion[] = [
       "Sagging skin",
     ],
     type: "MULTI",
+    icons: true,
   },
   {
     question_id: 6,

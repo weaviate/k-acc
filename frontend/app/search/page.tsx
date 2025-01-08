@@ -19,6 +19,9 @@ export default function SearchPage() {
       setIsLoading(true);
       const results = await searchProducts({
         query: searchQuery,
+        size: 12,
+        page: 1,
+        filters: [],
       } as SearchRequest);
       setSearchResults(results);
     } catch (error) {

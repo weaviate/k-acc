@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { SurveyQuestion } from "@/types/surveyQuestions";
+import { SurveyAnswer, SurveyQuestion } from "@/types/survey";
 import Image from "next/image";
 
 interface MultiQuestionProps {
   question: SurveyQuestion;
   onBack: () => void;
   onNext: (answers: string[]) => void;
-  existingAnswers?: string[];
+  existingAnswers?: SurveyAnswer;
 }
 
 const MultiQuestion: React.FC<MultiQuestionProps> = ({
@@ -16,7 +16,7 @@ const MultiQuestion: React.FC<MultiQuestionProps> = ({
   existingAnswers,
 }) => {
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>(
-    existingAnswers || [],
+    existingAnswers?.selected_options || [],
   );
 
   return (
@@ -31,6 +31,9 @@ const MultiQuestion: React.FC<MultiQuestionProps> = ({
         <h1 className="text-2xl text-primary text-center font-outfit">
           {question.question}
         </h1>
+        <p className="text-xs text-gray-500 text-center">
+          Please select up to 2 options
+        </p>
         <div className="grid grid-cols-2 w-3/4 gap-4">
           {question.options?.map((option) => (
             <button
@@ -41,13 +44,20 @@ const MultiQuestion: React.FC<MultiQuestionProps> = ({
                     selectedAnswers.filter((answer) => answer !== option),
                   );
                 } else {
-                  setSelectedAnswers([...selectedAnswers, option]);
+                  if (selectedAnswers.length < 2) {
+                    setSelectedAnswers([...selectedAnswers, option]);
+                  }
                 }
               }}
               className={`btn btn-secondary h-24 hover:bg-accent/10 flex flex-col items-center justify-center
                                 ${
                                   selectedAnswers.includes(option)
                                     ? "border-accent bg-accent/10"
+                                    : ""
+                                }
+                                ${
+                                  !selectedAnswers.includes(option) && selectedAnswers.length >= 2
+                                    ? "opacity-50 cursor-not-allowed"
                                     : ""
                                 }`}
             >

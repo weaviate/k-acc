@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { SurveyQuestion } from "@/types/surveyQuestions";
+import { SurveyQuestion, SurveyAnswer } from "@/types/survey";
 
 interface RangeQuestionProps {
   question: SurveyQuestion;
   onBack: () => void;
   onNext: (answer: string) => void;
-  existingAnswer?: string;
+  existingAnswer?: SurveyAnswer;
 }
 
 const RangeQuestion: React.FC<RangeQuestionProps> = ({
@@ -15,7 +15,7 @@ const RangeQuestion: React.FC<RangeQuestionProps> = ({
   existingAnswer,
 }) => {
   const [value, setValue] = useState<number>(
-    existingAnswer ? parseInt(existingAnswer) : 3,
+    existingAnswer ? existingAnswer.selected_options[0] : 3,
   );
 
   // Assuming options contains the min and max labels (e.g., ["Not at all", "Very much"])

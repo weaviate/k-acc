@@ -7,6 +7,5 @@ export default async function ProductPage({
   params: { id: string };
 }) {
   const product = await getProduct(params.id);
-  console.log(product);
   return <ProductView product={product} />;
 }

@@ -11,6 +11,8 @@ import ProgressBar from "@/components/survey/ProgressBar";
 import SurveyResults from "@/components/survey/SurveyResults";
 
 import { questions } from "@/constants/constants";
+import { SurveyAnswer,SurveyAnswers } from "@/types/survey";
+import { getSurveyResults } from "../api";
 
 export default function SurveyPage() {
   const router = useRouter();
@@ -18,13 +20,22 @@ export default function SurveyPage() {
   const [mounted, setMounted] = useState(false);
 
   const [currentQuestionId, setCurrentQuestionId] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, string[]>>({});
+  const [answers, setAnswers] = useState<SurveyAnswers>({answers: []});
 
   useEffect(() => {
+    // Check for saved answers when component mounts
+    const savedAnswers = localStorage.getItem('surveyAnswers');
+    if (savedAnswers) {
+      setAnswers(JSON.parse(savedAnswers));
+      // Redirect to results page
+      setCurrentQuestionId(questions.length + 1);
+      router.push(`/survey?q=${questions.length + 1}`);
+    }
+
     const questionId = parseInt(searchParams.get("q") || "0");
     setCurrentQuestionId(questionId);
     setMounted(true);
-  }, [searchParams]);
+  }, [router, searchParams]);
 
   if (!mounted) {
     return null;
@@ -36,8 +47,10 @@ export default function SurveyPage() {
 
   const handleNext = (answer: string | string[]) => {
     setAnswers((prev) => ({
-      ...prev,
-      [currentQuestionId]: Array.isArray(answer) ? answer : [answer],
+      answers: [...prev.answers, {
+        question_id: currentQuestionId,
+        selected_options: Array.isArray(answer) ? answer : [answer],
+      }],
     }));
 
     if (currentQuestionId < questions.length) {
@@ -49,7 +62,7 @@ export default function SurveyPage() {
   };
 
   const handleReset = () => {
-    setAnswers({});
+    setAnswers({answers: []});
     setCurrentQuestionId(0);
   };
 
@@ -82,7 +95,7 @@ export default function SurveyPage() {
               question={currentQuestion}
               onBack={() => router.push(`/survey?q=${currentQuestionId - 1}`)}
               onNext={handleNext}
-              existingAnswers={answers[currentQuestionId]}
+              existingAnswers={answers.answers[currentQuestionId]}
             />
           )}
           {currentQuestion?.type === "SINGLE" && (
@@ -90,7 +103,7 @@ export default function SurveyPage() {
               question={currentQuestion}
               onBack={() => router.push(`/survey?q=${currentQuestionId - 1}`)}
               onNext={handleNext}
-              existingAnswer={answers[currentQuestionId]?.[0]}
+              existingAnswer={answers.answers[currentQuestionId]}
             />
           )}
           {currentQuestion?.type === "RANGE" && (
@@ -98,7 +111,7 @@ export default function SurveyPage() {
               question={currentQuestion}
               onBack={() => router.push(`/survey?q=${currentQuestionId - 1}`)}
               onNext={handleNext}
-              existingAnswer={answers[currentQuestionId]?.[0]}
+              existingAnswer={answers.answers[currentQuestionId]}
             />
           )}
           {currentQuestionId > questions.length && (

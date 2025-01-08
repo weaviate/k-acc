@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SurveyQuestion } from "@/types/surveyQuestions";
+import { SurveyQuestion } from "@/types/survey";
 
 interface ProgressBarProps {
   questions: SurveyQuestion[];

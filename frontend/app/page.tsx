@@ -63,19 +63,19 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <div className="bg-background_blue p-10 flex flex-col items-center">
+      {/* <div className="bg-background_blue p-10 flex flex-col items-center">
         <p className="text-primary text-xl lg:text-2xl font-outfit mb-10">
           Recommended for you
         </p>
-        {/* <div className="carousel carousel-center max-w-[100vw]">
+        <div className="carousel carousel-center max-w-[100vw]">
           {recommendedProducts.map((product) => (
             <div key={product.product_id.toString()} className="carousel-item w-1/2 lg:w-64">
               <ProductCard product={product} />
             </div>
           ))}
-        </div> */}
-      </div>
-      <div className="p-10 flex flex-col items-center">
+        </div>
+      </div> */}
+      {/* <div className="p-10 flex flex-col items-center">
         <p className="pt-5 text-primary text-xl lg:text-2xl font-outfit mb-2">
           Customer Reviews
         </p>
@@ -83,7 +83,7 @@ export default function Home() {
           Must-have beauty products highly rated by customers!
         </p>
         <ReviewDisplay reviews={dummyReviews} />
-      </div>
+      </div> */}
     </main>
   );
 }

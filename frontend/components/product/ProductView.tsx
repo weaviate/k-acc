@@ -35,11 +35,13 @@ export default function ProductView({ product }: ProductViewProps) {
         </button>
       </div>
       <div className="flex flex-col lg:flex-row gap-2 w-5/6 mx-auto">
-        <ImageCustom
-          image_url={product.image_url}
-          size="XXL"
-          className="rounded-md shadow-md"
+        <div className="flex flex-col">
+          <ImageCustom
+            image_url={product.image_url}
+            size="XXL"
+            className="rounded-md shadow-md object-contain"
         />
+        </div>
 
         <div className="flex flex-col lg:w-1/2 items-left justify-left text-left bg-secondary rounded-md lg:p-12 p-6 shadow-md">
           <h1 className="lg:text-2xl text-xl text-primary font-outfit mb-4">
