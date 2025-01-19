@@ -1,5 +1,6 @@
 import { SurveyQuestion } from "@/types/survey";
 import { Product, Review } from "@/types/products";
+import { Filter } from "@/types/search";
 
 export const questions: SurveyQuestion[] = [
   {
@@ -138,5 +139,28 @@ export const stackProducts = [
     name: "Product 3",
     price: 300,
     description: "Description 3",
+  },
+];
+
+export const filterProps: Filter[] = [
+  {
+    name: "category",
+    type: "MULTI",
+  },
+  {
+    name: "brand_name",
+    type: "SINGLE",
+  },
+  {
+    name: "sell_price",
+    type: "RANGE",
+  },
+  {
+    name: "average_score_percentage",
+    type: "RANGE",
+  },
+  {
+    name: "ingredient_groups",
+    type: "MULTI",
   },
 ];

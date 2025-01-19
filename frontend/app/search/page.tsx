@@ -5,6 +5,8 @@ import { Product } from "@/types/products";
 import { useState, useEffect } from "react";
 import ProductCard from "@/components/product/ProductCard";
 import { SearchRequest } from "@/types/search";
+import FilterNav from "@/components/navigation/FilterNav";
+
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Product[]>([]);
@@ -43,10 +45,23 @@ export default function SearchPage() {
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {searchResults.map((product) => (
-              <ProductCard key={product.product_id} product={product} />
-            ))}
+          <div className="flex">
+            {/* <div className="w-1/4 pr-6">
+              <FilterNav
+                filters={filters}
+                onFilterChange={(filters) => {
+                  // Handle filter changes
+                  console.log("Filter changed:", filters);
+                }}
+              />
+            </div> */}
+            <div className="w-3/4">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {searchResults.map((product) => (
+                  <ProductCard key={product.product_id} product={product} />
+                ))}
+              </div>
+            </div>
           </div>
         )}
 

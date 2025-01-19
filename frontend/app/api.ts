@@ -1,10 +1,12 @@
 "use server";
 
-import { SearchRequest } from "@/types/search";
+import { SearchRequest, SearchResponse } from "@/types/search";
 import { Product, emptyProduct } from "@/types/products";
 import weaviate, { WeaviateClient, Filters } from "weaviate-client";
 import { SurveyAnswers, SurveyResults, UserData } from "@/types/survey";
 import { Filter } from "@/types/search";
+
+const collectionName = "ProductDataV2";
 
 async function connectToWeaviate() {
   const weaviateURL = process.env.WEAVIATE_URL as string;
@@ -26,7 +28,7 @@ async function connectToWeaviate() {
 
 async function getProductUUID(productId: string) {
   const client = await connectToWeaviate();
-  const products = client.collections.get("ProductData");
+  const products = client.collections.get(collectionName);
 
   const result = await products.query.fetchObjects({
     filters: products.filter.byProperty("product_id").equal(productId),
@@ -38,7 +40,7 @@ async function getProductUUID(productId: string) {
 
 export async function getProduct(productId: string) {
   const client = await connectToWeaviate();
-  const products = client.collections.get("ProductData");
+  const products = client.collections.get(collectionName);
 
   const result = await products.query.fetchObjects({
     filters: products.filter.byProperty("product_id").equal(productId),
@@ -50,31 +52,33 @@ export async function getProduct(productId: string) {
 
 export async function searchProducts(searchRequest: SearchRequest) {
   const client = await connectToWeaviate();
-  const products = client.collections.get("ProductData");
+  const products = client.collections.get(collectionName);
 
-  const weaviateFilters = [];
-  for (let filter of searchRequest.filters) {
-    if (filter.type === "MULTI" && filter.values) {
-      weaviateFilters.push(products.filter.byProperty(filter.name).containsAny(filter.values));
-    } else if (filter.type === "SINGLE" && filter.value) {
-      weaviateFilters.push(products.filter.byProperty(filter.name).equal(filter.value));
-    } else if (filter.type === "RANGE" && filter.min && filter.max) {
-      weaviateFilters.push(Filters.and(products.filter.byProperty(filter.name).greaterThan(filter.min), products.filter.byProperty(filter.name).lessThan(filter.max)));
-    }
-  }
+  const aggregateResponse = await executeAggregation(searchRequest);
+
+  // const weaviateFilters = [];
+  // for (let filter of searchRequest.filters) {
+  //   if (filter.type === "MULTI" && filter.values) {
+  //     weaviateFilters.push(products.filter.byProperty(filter.name).containsAny(filter.values));
+  //   } else if (filter.type === "SINGLE" && filter.value) {
+  //     weaviateFilters.push(products.filter.byProperty(filter.name).equal(filter.value));
+  //   } else if (filter.type === "RANGE" && filter.min && filter.max) {
+  //     weaviateFilters.push(Filters.and(products.filter.byProperty(filter.name).greaterThan(filter.min), products.filter.byProperty(filter.name).lessThan(filter.max)));
+  //   }
+  // }
 
   let result;
   if (searchRequest.query !== "") {
-    result = await products.query.hybrid(searchRequest.query, {
+    result = await products.query.nearText(searchRequest.query, {
       limit: searchRequest.size,
       offset: searchRequest.page,
-      filters: Filters.and(...weaviateFilters),
+      // filters: Filters.and(...weaviateFilters),
     });
   } else {
     result = await products.query.fetchObjects({
       limit: searchRequest.size,
       offset: searchRequest.page,
-      filters: Filters.and(...weaviateFilters),
+      // filters: Filters.and(...weaviateFilters),
     });
   }
 
@@ -86,7 +90,7 @@ export async function searchProducts(searchRequest: SearchRequest) {
 
 export async function getRecommendations(productId: string) {
   const client = await connectToWeaviate();
-  const products = client.collections.get("ProductData");
+  const products = client.collections.get(collectionName);
 
   const productUUID = await getProductUUID(productId);
   const result = await products.query.nearObject(productUUID, {
@@ -101,7 +105,7 @@ export async function getRecommendations(productId: string) {
 
 export async function getSurveyResults(surveyAnswers: SurveyAnswers): Promise<SurveyResults> {
   const client = await connectToWeaviate();
-  const products = client.collections.get("ProductData");
+  const products = client.collections.get(collectionName);
 
   const userData: UserData = {
     skinTone: surveyAnswers.answers[1].selected_options[0],
@@ -139,7 +143,7 @@ export async function getSurveyResults(surveyAnswers: SurveyAnswers): Promise<Su
 
 async function searchProductsByPrompt(prompt: string, categories: string[]): Promise<Product[]> {
   const client = await connectToWeaviate();
-  const products = client.collections.get("ProductData");
+  const products = client.collections.get(collectionName);
 
   const result = await products.query.hybrid(prompt, {
     limit: 1,
@@ -156,4 +160,31 @@ async function getProductSummary(productSuggestions: Product[], userData: UserDa
 
 
   return "Here's your summary"
+}
+
+async function executeAggregation(searchRequest: SearchRequest) {
+  const client = await connectToWeaviate();
+  const products = client.collections.get(collectionName);
+
+  const aggs = {
+    "category": products.metrics.aggregate('category').text(['topOccurrencesValue', 'topOccurrencesOccurs'], 10),
+    "brand_name": products.metrics.aggregate('brand_name').text(['topOccurrencesValue', 'topOccurrencesOccurs'], 10),
+    "sell_price": products.metrics.aggregate('sell_price').integer(['maximum', 'minimum']),
+    "average_score_percentage": products.metrics.aggregate('average_score_percentage').integer(['maximum', 'minimum']),
+    "ingredient_groups": products.metrics.aggregate('ingredient_groups').text(['topOccurrencesValue', 'topOccurrencesOccurs'], 10),
+  }
+
+  let result;
+  if (searchRequest.query != "") {
+    result = await products.aggregate.nearText(searchRequest.query, {
+      returnMetrics: Object.values(aggs)
+    })
+  } else {
+    result = await products.aggregate.overAll({
+      returnMetrics: Object.values(aggs)
+    })
+  }
+
+  console.log(result)
+  return result
 }

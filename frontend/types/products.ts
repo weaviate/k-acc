@@ -7,13 +7,15 @@ export interface Product {
   brand_name: string;
   brand_id: number;
   brand_about: string;
-  sell_price: string;
-  list_price: string;
-  discount_percentage: string;
+  sell_price: number;
+  list_price: number;
+  discount_percentage: number;
   discount_label: string;
   review_count: number;
   average_score_percentage: number;
   major_ingredients: string;
+  ingredient_group_details: object[];
+  ingredient_groups: string[];
   product_url: string;
   professional_review: string;
   gallery_description: string;
@@ -33,13 +35,15 @@ export const emptyProduct: Product = {
   brand_name: "",
   brand_id: 0,
   brand_about: "",
-  sell_price: "",
-  list_price: "",
-  discount_percentage: "",
+  sell_price: 0,
+  list_price: 0,
+  discount_percentage: 0,
   discount_label: "",
   review_count: 0,
   average_score_percentage: 0,
   major_ingredients: "",
+  ingredient_group_details: [],
+  ingredient_groups: [],
   product_url: "",
   professional_review: "",
   gallery_description: "",

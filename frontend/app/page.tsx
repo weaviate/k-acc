@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import ProductCard from "@/components/product/ProductCard";
 import { stackProducts, dummyReviews } from "@/constants/constants";
 import ReviewDisplay from "@/components/visual/ReviewDisplay";
+import { RiveAnimation } from "@/components/visual/RiveAnimation";
 
 export default function Home() {
   const router = useRouter();
@@ -27,13 +28,12 @@ export default function Home() {
 
   return (
     <main className="flex-grow">
-      <div className="hero min-h-[60vh]">
-        <div className="hero-content flex-col lg:flex-row-reverse w-full gap-16">
-          <img
-            src="hero.png"
-            className="lg:basis-1/3 object-contain h-[360px] w-auto"
-          />
-          <div className="flex flex-col gap-4 basis-2/3 ml-3 lg:ml-16">
+      <div className="hero min-h-[70vh] relative">
+        <div className="hero-content w-full items-center lg:items-start justify-center lg:justify-start text-center lg:text-left">
+          <div className="absolute right-0 lg:right-16 -top-12 lg:-top-28 h-[350px] lg:h-[700px] w-full lg:w-1/2">
+            <RiveAnimation />
+          </div>
+          <div className="flex flex-col gap-4 mt-56 lg:mt-0 lg:ml-8 items-center lg:items-start justify-center lg:justify-start">
             <p className="text-3xl text-primary font-outfit lg:-mb-5">stakk</p>
             <p className="text-xl text-accent font-outfit">
               Find your perfect skin
@@ -44,7 +44,7 @@ export default function Home() {
               and only you.
             </p>
             <button
-              className="btn btn-accent text-secondary mt-6 w-1/2 lg:w-1/4"
+              className="btn btn-accent text-secondary mt-6 w-1/2 lg:w-5/6 lg:w-1/4"
               onClick={() => router.push("/survey")}
             >
               Get Started
