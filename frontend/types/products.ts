@@ -24,6 +24,7 @@ export interface Product {
   is_most_popular: boolean;
   is_limited_deal: boolean;
   is_eco_friendly: boolean;
+  product_data_review_analysis: object[];
 }
 
 export const emptyProduct: Product = {
@@ -52,6 +53,7 @@ export const emptyProduct: Product = {
   is_most_popular: false,
   is_limited_deal: false,
   is_eco_friendly: false,
+  product_data_review_analysis: [],
 };
 
 export interface Review {

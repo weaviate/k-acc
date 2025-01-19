@@ -117,25 +117,37 @@ export async function getSurveyResults(surveyAnswers: SurveyAnswers): Promise<Su
   }
 
   // main stack
-  const cleanser = {prompt: `Face cleanser for ${userData.skinType} skin, ${userData.sensitive ? "sensitive skin" : ""}, ${userData.concerns.join(', ')}`, categories: ["Face Cleansers", "Face Washes"]}
-  const moisturizer = {prompt: `Face moisturizer for ${userData.skinType} skin, ${userData.sensitive ? "sensitive skin" : ""}, ${userData.concerns.join(', ')}`, categories: ["Moisturizers"]}
-  const suncare = {prompt: `Sunscreen for ${userData.skinType} skin, ${userData.sensitive ? "sensitive skin" : ""}, ${userData.concerns.join(', ')}`, categories: ["Sunscreens & Sun Care"]}
+  const cleanser = {name: "Cleanser", prompt: `Face cleanser for ${userData.skinType} skin, ${userData.sensitive ? "sensitive skin" : ""}, ${userData.concerns.join(', ')}`, categories: ["Face Cleansers", "Face Washes"]}
+  const moisturizer = {name: "Moisturizer", prompt: `Face moisturizer for ${userData.skinType} skin, ${userData.sensitive ? "sensitive skin" : ""}, ${userData.concerns.join(', ')}`, categories: ["Moisturizers"]}
+  const suncare = {name: "Sunscreen", prompt: `Sunscreen for ${userData.skinType} skin, ${userData.sensitive ? "sensitive skin" : ""}, ${userData.concerns.join(', ')}`, categories: ["Sunscreens & Sun Care"]}
 
-  const productsMain: Product[] = [];
-  for (let product of [cleanser, moisturizer, suncare]) {
-    const products = await searchProductsByPrompt(product.prompt, product.categories);
-    productsMain.push(...products);
+  const productsMain: Record<string, Product> = {};
+  for (let category of [cleanser, moisturizer, suncare]) {
+    const results = await searchProductsByPrompt(category.prompt, category.categories);
+    productsMain[category.name] = results[0];
   }
 
- // additional
-  
+  // additional
+  const productsAdditional: Record<string, Product> = {};
+  for (let concern of userData.concerns) {
+    if (concern !== "None") {
+      const additional = {name: `Concern: ${concern}`, prompt: `${concern}, ${userData.skinType} skin, ${userData.sensitive ? "sensitive skin" : ""}`, categories: ["Face Serums", "Face Masks", "Eye Care", "Face Care", "Face Creams", "Acne & Spot Treatments"]}
+      const results = await searchProductsByPrompt(additional.prompt, additional.categories);
+      productsAdditional[additional.name] = results[0];
+    }
+  }
+  for (let goal of userData.goals) {
+    const additional = {name: `Goal: ${goal}`, prompt: `${goal}, ${userData.skinType} skin, ${userData.sensitive ? "sensitive skin" : ""}`, categories: ["Face Serums", "Face Masks", "Eye Care", "Face Care", "Face Creams", "Acne & Spot Treatments"]}
+    const results = await searchProductsByPrompt(additional.prompt, additional.categories);
+    productsAdditional[additional.name] = results[0];
+  }
 
-  const userSummary = await getProductSummary(productsMain, userData);
+  const userSummary = await getProductSummary(Object.values(productsMain), Object.values(productsAdditional), userData);
 
   const surveyResults: SurveyResults = {
     text: userSummary,
     productsMain: productsMain,
-    productsAdditional: [],
+    productsAdditional: productsAdditional,
   };
 
   return surveyResults;
@@ -156,7 +168,7 @@ async function searchProductsByPrompt(prompt: string, categories: string[]): Pro
   return product_results || [];
 }
 
-async function getProductSummary(productSuggestions: Product[], userData: UserData) {
+async function getProductSummary(productsMain: Product[], productsAdditional: Product[], userData: UserData) {
 
 
   return "Here's your summary"

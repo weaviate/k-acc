@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next.config.ts"
-  ],
+, "components/product/ProductCardHorizontaltsx"  ],
   "exclude": ["node_modules"]
 }

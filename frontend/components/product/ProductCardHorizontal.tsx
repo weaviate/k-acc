@@ -7,24 +7,24 @@ import { Product } from "@/types/products";
 import ImageCustom from "../visual/ImageCustom";
 import FavoriteButton from "../visual/FavoriteButton";
 
-interface ProductCardProps {
+interface ProductCardHorizontalProps {
   product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCardHorizontal: React.FC<ProductCardHorizontalProps> = ({ product }) => {
   const router = useRouter();
   return (
     <div
-      className="bg-secondary shadow-sm rounded-md w-full m-2 lg:m-5 cursor-pointer relative"
+      className="flex flex-row bg-secondary shadow-sm rounded-md w-full cursor-pointer relative"
       onClick={() => router.push("/product/" + product.product_id)}
       key={product.product_id}
     >
-      <div className="absolute top-4 right-4 z-10">
-        <FavoriteButton productId={product.product_id} />
-      </div>
-      <ImageCustom image_url={product.image_url} size="XL" className="" />
+      <ImageCustom image_url={product.image_url} size="XL" className="w-1/3 p-2" />
 
-      <div className="text-primary p-5">
+      <div className="text-primary p-5 w-2/3 mr-4">
+        <div className="absolute top-4 right-4 z-10">
+          <FavoriteButton productId={product.product_id} />
+        </div>
         <p className="text-md font-outfit pb-3">{product.name}</p>
         <p className="text-sm font-outfit pb-2">${product.list_price}</p>
         <div className="flex justify-start">
@@ -39,4 +39,4 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default ProductCardHorizontal;

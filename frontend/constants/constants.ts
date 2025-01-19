@@ -44,6 +44,7 @@ export const questions: SurveyQuestion[] = [
       "Puffy eyes",
       "Dark circles",
       "Sagging skin",
+      "None",
     ],
     type: "MULTI",
     icons: true,

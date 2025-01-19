@@ -68,7 +68,9 @@ export default function SurveyPage() {
 
   return (
     <div className="min-h-screen place-items-center pt-10">
-      <ProgressBar questions={questions} currentQuestion={currentQuestionId} />
+      {currentQuestionId <= questions.length && (
+        <ProgressBar questions={questions} currentQuestion={currentQuestionId} />
+      )}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentQuestionId}

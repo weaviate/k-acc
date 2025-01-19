@@ -2,7 +2,7 @@
 
 import React, { Suspense, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaHeart } from "react-icons/fa";
 
 import Link from "next/link";
 import SearchBar from "@/components/search/SearchBar";
@@ -79,6 +79,12 @@ const Navbar: React.FC = () => {
           }
         >
           <FaGithub size={20} />
+        </button>
+        <button
+          className={` text-opacity-25 btn btn-square btn-ghost text-primary hover:text-opacity-100 hover:bg-white`}
+          onClick={() => router.push("/favorites")}
+        >
+          <FaHeart size={20} />
         </button>
       </div>
     </div>

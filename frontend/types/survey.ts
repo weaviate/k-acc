@@ -19,8 +19,8 @@ export interface SurveyAnswers {
 
 export interface SurveyResults {
   text: string;
-  productsMain: Product[];
-  productsAdditional: Product[];
+  productsMain: Record<string, Product>;
+  productsAdditional: Record<string, Product>;
 }
 
 export interface UserData {
