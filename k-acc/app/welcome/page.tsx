@@ -16,7 +16,7 @@ export default function Welcome() {
   const { routeTo } = useContext(RouterContext);
 
   return (
-    <div className="flex flex-col items-center flex-grow justify-start h-full gap-4 ">
+    <div className="flex fade-in flex-col items-center flex-grow justify-start h-full gap-4 ">
       {/** Header */}
       <div className="flex flex-row items-center justify-between gap-2 w-full">
         <Button size="icon" variant="outline" onClick={() => routeTo("/")}>
@@ -56,7 +56,7 @@ export default function Welcome() {
         </Sheet>
       </div>
       {/** Display */}
-      <div className="flex items-center justify-center w-full aspect-[9/10] overflow-hidden rounded-2xl">
+      <div className="flex fade-down items-center justify-center w-full aspect-[9/10] overflow-hidden rounded-2xl">
         <img
           src="/product_display.png"
           alt="glowyou"

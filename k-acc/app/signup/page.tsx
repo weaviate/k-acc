@@ -21,7 +21,7 @@ export default function SignUp() {
   const { routeTo } = useContext(RouterContext);
 
   return (
-    <div className="flex flex-col justify-between h-full">
+    <div className="flex flex-col justify-between h-full fade-in">
       <div className="flex flex-row items-center justify-start gap-2 w-full">
         <Button
           size="icon"
@@ -35,7 +35,7 @@ export default function SignUp() {
           <p className="text-lg font-bold">glowyou</p>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center h-screen gap-4">
+      <div className="flex flex-col items-center justify-center h-screen gap-4 fade-down">
         <Button variant="glass">
           <FaGoogle size={24} />
           Sign up with Google
