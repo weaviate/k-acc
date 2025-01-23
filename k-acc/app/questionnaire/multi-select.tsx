@@ -22,13 +22,13 @@ export default function MultiSelect({
         <div
           className={`w-full fade-in h-[150px] hover:scale-105 shadow-md flex flex-col items-center cursor-pointer transition-all duration-300 rounded-xl justify-center gap-2 ${
             selected.includes(option.name)
-              ? "bg-white scale-105 border-2 border-primary"
-              : "glass-card"
+              ? "bg-white scale-105 border border-primary"
+              : "glass-card opacity-70"
           }`}
           key={option.name}
           onClick={() => triggerOption(option)}
         >
-          {option.icon && <option.icon className="w-12 fade-down" />}
+          {option.icon && <option.icon className="h-12 w-12 fade-down" />}
           <p
             className={`text-lg ${
               selected.includes(option.name) ? "font-bold" : ""

@@ -1,8 +1,14 @@
 import {
   GlowingIcon,
+  PigmentIcon,
+  PoresIcon,
   ProtectionIcon,
+  RednessIcon,
   RepairIcon,
   SoothingIcon,
+  TextureIcon,
+  WrinkleIcon,
+  AcneIcon,
 } from "./components/icons";
 
 import { HydrationIcon } from "./components/icons";
@@ -129,12 +135,12 @@ export const ConditionsQuestion: Question = {
   options: {
     selected: [],
     options: [
-      { name: "Acne", icon: "", color: "" },
-      { name: "Clogged Pores", icon: "", color: "" },
-      { name: "Redness", icon: "", color: "" },
-      { name: "Wrinkles", icon: "", color: "" },
-      { name: "Pigmentation", icon: "", color: "" },
-      { name: "Rough Texture", icon: "", color: "" },
+      { name: "Acne", icon: AcneIcon, color: "" },
+      { name: "Clogged Pores", icon: PoresIcon, color: "" },
+      { name: "Redness", icon: RednessIcon, color: "" },
+      { name: "Wrinkles", icon: WrinkleIcon, color: "" },
+      { name: "Pigmentation", icon: PigmentIcon, color: "" },
+      { name: "Rough Texture", icon: TextureIcon, color: "" },
     ],
   },
 };
