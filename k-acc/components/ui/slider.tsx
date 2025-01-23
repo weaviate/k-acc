@@ -37,7 +37,7 @@ const Slider = React.forwardRef<
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb className="relative block h-9 w-9 glass-card rounded-full border border-primary/50 bg-background transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
         {selectedLabel && (
-          <span className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-primary">
+          <span className="pointer-events-none absolute text-lg -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-primary">
             {selectedLabel} {currentValue}
           </span>
         )}

@@ -44,8 +44,8 @@ export default function AgeSlider({
         />
       </div>
       <div className="flex flex-row items-center justify-between gap-2 w-full">
-        <p>{minLabel}</p>
-        <p>{maxLabel}</p>
+        <p className="text-lg">{minLabel}</p>
+        <p className="text-lg">{maxLabel}</p>
       </div>
     </div>
   );

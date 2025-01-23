@@ -139,11 +139,11 @@ export default function QuestionnairePage() {
             </SheetContent>
           </Sheet>
         </div>
-        <div className="flex flex-col items-center justify-start w-full">
-          <p className="text-primary font-medium text-xl">
+        <div className="flex flex-col items-center justify-start w-full gap-1">
+          <p className="text-primary font-medium text-2xl text-center">
             {questions[currentQuestion].question}
           </p>
-          <p className="text-primary font-light text-sm">
+          <p className="text-primary font-light text-lg">
             {questions[currentQuestion].subtitle}
           </p>
         </div>

@@ -55,14 +55,14 @@ export default function SkinTypeSlider({
       <div className="flex fade-down flex-row items-center justify-between gap-2 w-full">
         <div className="flex flex-col items-center justify-center gap-2">
           <DryIcon className="h-12 w-12" />
-          <p>{minLabel}</p>
+          <p className="text-lg">{minLabel}</p>
         </div>
         <div>
-          <p>{currentLabel}</p>
+          <p className="text-lg">{currentLabel}</p>
         </div>
         <div className="flex flex-col items-center justify-center gap-2">
           <OilyIcon className="h-12 w-12" />
-          <p>{maxLabel}</p>
+          <p className="text-lg">{maxLabel}</p>
         </div>
       </div>
       <div className="flex flex-col items-center justify-center flex-grow gap-12 w-full">
