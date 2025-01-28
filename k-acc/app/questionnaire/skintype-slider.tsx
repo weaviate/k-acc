@@ -5,7 +5,7 @@ import { Slider } from "@/components/ui/slider";
 import { useEffect, useState } from "react";
 
 import { DryIcon, OilyIcon } from "@/app/components/icons";
-import { redirect } from "next/dist/server/api-utils";
+import { skinTypeMapping } from "@/app/types";
 
 interface SkinTypeSliderProps {
   min: number;
@@ -32,22 +32,9 @@ export default function SkinTypeSlider({
   const [currentColor, setCurrentColor] = useState("bg-green-300");
   const [currentLabel, setCurrentLabel] = useState("Normal Skin");
   useEffect(() => {
-    if (value < 2) {
-      setCurrentLabel("Very Dry Skin");
-      setCurrentColor("bg-violet-400");
-    } else if (value >= 2 && value < 4) {
-      setCurrentLabel("Dry Skin");
-      setCurrentColor("bg-violet-300");
-    } else if (value >= 4 && value < 6) {
-      setCurrentLabel("Normal Skin");
-      setCurrentColor("bg-green-300");
-    } else if (value >= 6 && value < 8) {
-      setCurrentLabel("Oily Skin");
-      setCurrentColor("bg-orange-300");
-    } else {
-      setCurrentLabel("Very Oily Skin");
-      setCurrentColor("bg-orange-400");
-    }
+    const skinType = skinTypeMapping[value as keyof typeof skinTypeMapping];
+    setCurrentLabel(skinType[0]);
+    setCurrentColor(skinType[1]);
   }, [value]);
 
   return (

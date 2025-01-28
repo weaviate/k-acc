@@ -213,3 +213,88 @@ body {
 .fade-in {
   animation: fade-in 0.5s ease-in-out;
 }
+
+.item1, .item2, .item3 {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  left: calc(50% - (var(--size) / 2));
+  top: calc(50% - (var(--size) / 2));
+  height: var(--size);
+  width: var(--size);
+  border-radius: 50%;
+  box-shadow: 
+    0 16px 32px 0 rgba(128, 128, 128, 0.18),
+    0 8px 32px 0 rgba(128, 128, 128, 0.24),
+    0 4px 12px 0 rgba(128, 128, 128, 0.35) inset;
+}
+
+.item1::before, .item2::before, .item3::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, 
+    rgba(255,255,255,0.8) 0%,
+    rgba(129,129,129,0.8) 50%,
+    rgba(255,255,255,0.8) 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.loader .item1 {
+  --size: 90px;
+  animation: size1_1 2.5s infinite alternate;
+  z-index: 1;
+}
+
+.loader .item2 {
+  --size: 60px;
+  animation: size1_2 2.5s infinite alternate;
+  z-index: 2;
+}
+
+.loader .item3 {
+  --size: 30px;
+  animation: size1_3 2.5s infinite alternate;
+  z-index: 3;
+}
+
+@keyframes size1_1 {
+  0%,
+  10% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes size1_2 {
+  0%,
+  40% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes size1_3 {
+  0%,
+  70% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

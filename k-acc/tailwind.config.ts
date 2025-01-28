@@ -12,12 +12,12 @@ const config: Config = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        FST1: "#FFE0CD",
-        FST2: "#E3B27E",
+        FST1: "#FFDFC4",
+        FST2: "#EBC19C",
         FST3: "#B5652A",
-        FST4: "#582B10",
-        FST5: "#1A0F05",
-        FST6: "#050302",
+        FST4: "#894A1B",
+        FST5: "#602F12",
+        FST6: "#411E09",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

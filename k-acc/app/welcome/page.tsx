@@ -11,6 +11,8 @@ import {
 import { IoCaretBack, IoLogIn, IoSparklesSharp, IoMenu } from "react-icons/io5";
 import { RouterContext } from "../components/useRouter";
 import { useContext } from "react";
+import SubMenu from "../components/submenu";
+import Navbar from "@/components/ui/navbar";
 
 export default function Welcome() {
   const { routeTo } = useContext(RouterContext);
@@ -18,7 +20,7 @@ export default function Welcome() {
   return (
     <div className="flex fade-in flex-col items-center flex-grow justify-start h-full gap-4 ">
       {/** Header */}
-      <div className="flex flex-row items-center justify-between gap-2 w-full">
+      <Navbar>
         <Button size="icon" variant="outline" onClick={() => routeTo("/")}>
           <IoCaretBack size={24} />
         </Button>
@@ -26,35 +28,8 @@ export default function Welcome() {
           <p className="text-xl ">Welcome to</p>
           <p className="text-xl font-bold">glowyou</p>
         </div>
-        <Sheet>
-          <SheetTrigger>
-            <IoMenu size={24} />
-          </SheetTrigger>
-          <SheetContent className="flex flex-col items-center justify-center gap-2">
-            <SheetHeader>
-              <SheetTitle>glowyou</SheetTitle>
-            </SheetHeader>
-            <div className="flex flex-grow flex-col w-full items-center justify-end gap-2">
-              <Button
-                size="lg"
-                variant="glass"
-                className="w-full"
-                onClick={() => routeTo("/login")}
-              >
-                Log in
-              </Button>
-              <Button
-                size="lg"
-                variant="glass"
-                className="w-full"
-                onClick={() => routeTo("/signup")}
-              >
-                Sign up
-              </Button>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </div>
+        <SubMenu />
+      </Navbar>
       {/** Display */}
       <div className="flex fade-down items-center justify-center w-full aspect-[9/10] overflow-hidden rounded-2xl">
         <img
