@@ -46,10 +46,14 @@ import { IoInformation } from "react-icons/io5";
 import SummaryDisplay from "./summary-display";
 import SubMenu from "../components/submenu";
 import Navbar from "@/components/ui/navbar";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function QuestionnairePage() {
   const { routeTo, updateUserInformation, userInformation } =
     useContext(RouterContext);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [summaryMode, setSummaryMode] = useState(false);
 
@@ -120,7 +124,7 @@ export default function QuestionnairePage() {
   };
 
   const triggerConversion = () => {
-    setSummaryMode(true);
+    router.push(`/questionnaire?summary=true`);
     const newUserInformation = convertQuestionsToUserInformation(questions);
     setCurrentUserInformation(newUserInformation);
   };
@@ -141,7 +145,7 @@ export default function QuestionnairePage() {
           return q;
         }
 
-        // Make a copy of the question so it’s a new reference
+        // Make a copy of the question so it's a new reference
         const multiSelectOptions = q.options as MultiSelectQuestion;
 
         // `selected` should be a new array (so React sees a change)
@@ -186,16 +190,17 @@ export default function QuestionnairePage() {
 
   const nextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+      const nextQuestionNumber = currentQuestion + 2;
+      router.push(`/questionnaire?q=${nextQuestionNumber}`);
     }
   };
 
   const previousQuestion = () => {
+    let prevQuestionNumber = currentQuestion;
     if (summaryMode) {
-      setSummaryMode(false);
-    } else if (currentQuestion > 0) {
-      setCurrentQuestion((prevQuestion) => prevQuestion - 1);
+      prevQuestionNumber += 1;
     }
+    router.push(`/questionnaire?q=${prevQuestionNumber}`);
   };
 
   useEffect(() => {
@@ -205,10 +210,35 @@ export default function QuestionnairePage() {
   useEffect(() => {
     if (userInformation) {
       setCurrentUserInformation(userInformation);
-    } else {
-      console.log("No user information");
     }
   }, []);
+
+  useEffect(() => {
+    const qParam = searchParams.get("q");
+    const summaryParam = searchParams.get("summary");
+    if (qParam) {
+      const index = parseInt(qParam, 10) - 1;
+      if (!isNaN(index) && index >= 0 && index < questions.length) {
+        setCurrentQuestion(index);
+      } else {
+        setCurrentQuestion(0);
+      }
+    }
+
+    if (summaryParam) {
+      if (
+        summaryParam === "true" &&
+        (currentUserInformation != null || userInformation != null)
+      ) {
+        setSummaryMode(true);
+        setCurrentQuestion(questions.length - 1);
+      } else {
+        setSummaryMode(false);
+      }
+    } else {
+      setSummaryMode(false);
+    }
+  }, [searchParams, questions]);
 
   return (
     <div className="flex flex-col items-center justify-between h-full gap-4 fade-in ">

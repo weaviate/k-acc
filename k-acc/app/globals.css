@@ -84,9 +84,9 @@ body {
   backdrop-filter: blur(10px);
   overflow: visible;
   box-shadow: 
-  0 16px 32px 0 rgba(128, 128, 128, 0.18),
-    0 8px 32px 0 rgba(128, 128, 128, 0.24),
-    0 4px 12px 0 rgba(128, 128, 128, 0.35) inset;
+  0 16px 32px 0 rgba(128, 128, 128, 0.10),
+    0 8px 32px 0 rgba(128, 128, 128, 0.15),
+    0 4px 12px 0 rgba(128, 128, 128, 0.20) inset;
 }
 
 .glass:hover {
@@ -119,9 +119,9 @@ body {
   backdrop-filter: blur(10px);
   overflow: visible;
   box-shadow: 
-    0 16px 32px 0 rgba(128, 128, 128, 0.18),
-    0 8px 32px 0 rgba(128, 128, 128, 0.24),
-    0 4px 12px 0 rgba(128, 128, 128, 0.35) inset;
+    0 16px 32px 0 rgba(128, 128, 128, 0.10),
+    0 8px 32px 0 rgba(128, 128, 128, 0.15),
+    0 4px 12px 0 rgba(128, 128, 128, 0.20) inset;
 }
 
 .glass-card.hover:hover {
@@ -146,38 +146,6 @@ body {
   mask-composite: exclude;
   pointer-events: none;
 }
-
-.glass-card-colored {
-  position: relative;
-  border-radius: 1rem;
-  background: var(--tw-bg-opacity, 1);
-  backdrop-filter: blur(10px);
-  overflow: visible;
-  box-shadow: 
-    0 16px 32px 0 rgba(128, 128, 128, 0.18),
-    0 8px 32px 0 rgba(128, 128, 128, 0.24),
-    0 4px 12px 0 rgba(128, 128, 128, 0.35) inset;
-}
-
-.glass-card-colored::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 1.5px;
-  border-radius: 1rem;
-  background: linear-gradient(180deg, 
-    rgba(255,255,255,0.8) 0%,
-    rgba(129,129,129,0.8) 50%,
-    rgba(255,255,255,0.8) 100%
-  );
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
 
 @keyframes fade-down {
   from {
