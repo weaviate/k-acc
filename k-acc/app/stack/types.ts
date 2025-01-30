@@ -9,7 +9,7 @@ export type WeaviateProduct = {
   price: number;
   review_count: number;
   score_percentage: number;
-  ingredients: string[];
+  ingredients: string;
   ingredient_groups: string[];
   url: string;
   description: string;
@@ -40,6 +40,12 @@ export type Product = {
   explanation: string;
 };
 
+export type Details = {
+  id: string;
+  name: string;
+  ingredients: string;
+};
+
 export type Effect = {
   name: string;
   count: number;
@@ -51,4 +57,9 @@ export type Stack = {
   cleanser: Product | null;
   moisturizer: Product | null;
   sunscreen: Product | null;
+};
+
+export type StackPayload = {
+  stack: Stack;
+  description: string;
 };

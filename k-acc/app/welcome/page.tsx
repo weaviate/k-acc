@@ -54,7 +54,7 @@ export default function Welcome() {
         <Button
           size="xl"
           variant="glass"
-          className="min-w-[300px]"
+          className="w-full"
           onClick={() => routeTo("/questionnaire")}
         >
           <IoSparklesSharp size={24} />
@@ -63,7 +63,7 @@ export default function Welcome() {
         <Button
           size="xl"
           variant="glass"
-          className="min-w-[300px]"
+          className="w-full"
           onClick={() => routeTo("/login")}
         >
           <IoLogIn size={24} />

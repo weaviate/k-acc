@@ -4,59 +4,34 @@ import { Effect, Product } from "./types";
 interface ProductCardProps {
   product: Product | null;
   label: string;
-  bgColor: string;
+  onClick: (product: Product) => void;
 }
 
 export default function ProductCard({
   product,
   label,
-  bgColor,
+  onClick,
 }: ProductCardProps) {
   if (!product) {
     return null;
   }
 
-  const [positiveEffect, setPositiveEffect] = useState<Effect[]>([]);
-
-  useEffect(() => {
-    const positiveEffects = [...product.positive_effects].sort(
-      (a, b) => b.percentage - a.percentage
-    );
-    setPositiveEffect(positiveEffects);
-  }, [product]);
-
   return (
-    <div className={`flex flex-col items-center justify-start h-full fade-in`}>
-      <div className="rounded-t-xl bg-white fade-down h-[300px] w-full">
+    <div
+      className={` flex p-1 gap-2 items-center cursor-pointer justify-start hover:scale-105 transition-all duration-300 ease-in-out border border-white hover:border-primary fade-in bg-white rounded-xl`}
+      onClick={() => onClick(product)}
+    >
+      <div className="rounded-xl fade-down w-[100px]">
         <img
-          src={product.image_xl}
+          src={product.image}
           alt={product.name}
-          className="w-full h-full object-contain rounded-xl"
+          className="w-full h-full object-fill rounded-xl"
         />
       </div>
-
-      <div
-        className={`flex flex-col items-center justify-between gap-3 w-full bg-${bgColor}-100 h-full rounded-b-xl p-4`}
-      >
+      <div className={`flex flex-col items-start justify-between gap-3 w-2/3 `}>
         <div className="flex flex-col items-start justify-start">
-          <div className="flex items-center justify-start gap-1">
-            <p className="text-sm text-primary/80">{label}</p>
-          </div>
-
-          <p className="font-bold ">{product.name}</p>
-        </div>
-        <div className="flex flex-col items-start justify-start w-full">
-          <div className="flex items-start justify-start gap-2 w-full">
-            {positiveEffect.slice(0, 3).map((effect) => (
-              <div
-                className={`flex items-center truncate flex-wrap justify-center gap-2 bg-${bgColor}-200 rounded-xl p-2`}
-              >
-                <p className="text-sm font-bold text-primary/80">
-                  {effect.name}
-                </p>
-              </div>
-            ))}
-          </div>
+          <p className="text-sm text-primary/80">{label}</p>
+          <p className="font-bold text-sm">{product.name}</p>
         </div>
       </div>
     </div>

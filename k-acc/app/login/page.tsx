@@ -34,7 +34,7 @@ export default function Login() {
           <p className="text-lg font-bold">glowyou</p>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center h-screen gap-4 fade-down">
+      <div className="flex flex-col items-center justify-center gap-4 fade-down">
         <Button variant="glass">
           <FaGoogle size={24} />
           Continue with Google

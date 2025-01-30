@@ -61,7 +61,7 @@ export default function SummaryDisplay({
           <div className="flex flex-row items-start justify-start gap-2 w-full overflow-x-auto whitespace-nowrap scrollbar-hide p-3">
             {userInformation.goals.map((goal, index) => (
               <div
-                className={`fade-in aspect-square w-[100px] flex-shrink-0 shadow-md flex flex-col items-center transition-all duration-300 rounded-xl justify-center gap-2 bg-white
+                className={`fade-in aspect-square w-[100px] flex-shrink-0 flex flex-col items-center transition-all duration-300 rounded-xl justify-center gap-2 bg-white
                      }`}
                 key={goal + index}
               >
@@ -83,7 +83,7 @@ export default function SummaryDisplay({
           <div className="flex flex-row items-start justify-start gap-2 w-full overflow-x-auto whitespace-nowrap scrollbar-hide p-3">
             {userInformation.conditions.map((condition, index) => (
               <div
-                className={`fade-in aspect-square w-[100px] flex-shrink-0 shadow-md flex flex-col items-center transition-all duration-300 rounded-xl justify-center gap-2 bg-white
+                className={`fade-in aspect-square w-[100px] flex-shrink-0 flex flex-col items-center transition-all duration-300 rounded-xl justify-center gap-2 bg-white
                      }`}
                 key={condition + index}
               >

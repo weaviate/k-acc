@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Webkit browsers (Chrome, Safari, newer versions of Opera) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.50
+  ); /* Light color for visibility against dark backgrounds */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Fix the white blocks in the scrollbar corner */
+::-webkit-scrollbar-corner {
+  background-color: transparent; /* Matches the track or background */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.50);
+}
+
 body {
   font-family: var(--font-urbanist), Arial, Helvetica, sans-serif;
 }
@@ -14,7 +46,7 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 95%;
+    --background: 0 0% 97%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -84,8 +116,7 @@ body {
   backdrop-filter: blur(10px);
   overflow: visible;
   box-shadow: 
-  0 16px 32px 0 rgba(128, 128, 128, 0.10),
-    0 8px 32px 0 rgba(128, 128, 128, 0.15),
+    0 8px 16px 0 rgba(128, 128, 128, 0.15),
     0 4px 12px 0 rgba(128, 128, 128, 0.20) inset;
 }
 
@@ -119,8 +150,7 @@ body {
   backdrop-filter: blur(10px);
   overflow: visible;
   box-shadow: 
-    0 16px 32px 0 rgba(128, 128, 128, 0.10),
-    0 8px 32px 0 rgba(128, 128, 128, 0.15),
+    0 8px 16px 0 rgba(128, 128, 128, 0.15),
     0 4px 12px 0 rgba(128, 128, 128, 0.20) inset;
 }
 
